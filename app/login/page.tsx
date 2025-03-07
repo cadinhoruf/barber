@@ -1,34 +1,35 @@
-"use client"
+"use client";
 
-import { useSession } from "next-auth/react"
-import { useRouter } from "next/navigation"
-import { useEffect } from "react"
-import { LoginForm } from "@/components/login-form"
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { LoginForm } from "@/components/login-form";
 
 export default function LoginPage() {
-  const { status } = useSession()
-  const router = useRouter()
+  const { status } = useSession();
+  const router = useRouter();
 
   useEffect(() => {
     if (status === "authenticated") {
-      router.push("/dashboard")
+      router.push("/dashboard");
     }
-  }, [status, router])
+  }, [status, router]);
 
   if (status === "loading") {
-    return <div>Loading...</div>
+    return <></>;
   }
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center py-12">
+    <div className="flex flex-col justify-center items-center py-12 min-h-screen">
       <div className="mx-auto w-full max-w-md">
         <div className="flex flex-col space-y-2 text-center">
-          <h1 className="text-3xl font-bold">Barbearia Estilo</h1>
-          <p className="text-muted-foreground">Faça login para agendar seu corte</p>
+          <h1 className="font-bold text-3xl">Barbearia Estilo</h1>
+          <p className="text-muted-foreground">
+            Faça login para agendar seu corte
+          </p>
         </div>
         <LoginForm />
       </div>
     </div>
-  )
+  );
 }
-

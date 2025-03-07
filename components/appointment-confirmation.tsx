@@ -1,12 +1,20 @@
-"use client"
+'use client'
 
-import { useState } from "react"
-import { format } from "date-fns"
-import { ptBR } from "date-fns/locale"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { bookAppointment } from "@/lib/google-calendar"
-import { Check, Loader2 } from "lucide-react"
+import { useState } from 'react'
+import { format } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle
+} from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { bookAppointment } from '@/lib/google-calendar'
+import { Check, Loader2 } from 'lucide-react'
+import { toast } from 'sonner'
 
 interface AppointmentConfirmationProps {
   date: Date
@@ -14,19 +22,33 @@ interface AppointmentConfirmationProps {
   onClose: () => void
 }
 
-export function AppointmentConfirmation({ date, time, onClose }: AppointmentConfirmationProps) {
+export function AppointmentConfirmation({
+  date,
+  time,
+  onClose
+}: AppointmentConfirmationProps) {
   const [isLoading, setIsLoading] = useState(false)
   const [isBooked, setIsBooked] = useState(false)
 
-  const formattedDate = format(date, "EEEE, dd 'de' MMMM 'de' yyyy", { locale: ptBR })
+  const formattedDate = format(date, "EEEE, dd 'de' MMMM 'de' yyyy", {
+    locale: ptBR
+  })
 
   const handleConfirm = async () => {
     setIsLoading(true)
     try {
-      await bookAppointment(date, time)
-      setIsBooked(true)
-    } catch (error) {
-      console.error("Erro ao agendar:", error)
+      const { status } = await bookAppointment(date, time, 30)
+      console.log(status)
+      if (status === 'success') {
+        toast.success('Agendamento confirmado com sucesso!')
+        setIsBooked(true)
+      } else {
+        toast.error('Erro ao agendar:', {
+          description: 'Por favor, tente novamente mais tarde.'
+        })
+      }
+    } catch (error: any) {
+      console.error('Erro ao agendar:', error)
     } finally {
       setIsLoading(false)
     }
@@ -38,53 +60,56 @@ export function AppointmentConfirmation({ date, time, onClose }: AppointmentConf
         <CardTitle>Confirmar Agendamento</CardTitle>
         <CardDescription>Revise os detalhes do seu agendamento</CardDescription>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className='space-y-4'>
         {isBooked ? (
-          <div className="flex flex-col items-center justify-center space-y-4 py-6">
-            <div className="rounded-full bg-green-100 p-3">
-              <Check className="h-8 w-8 text-green-600" />
+          <div className='flex flex-col justify-center items-center space-y-4 py-6'>
+            <div className='bg-green-100 p-3 rounded-full'>
+              <Check className='w-8 h-8 text-green-600' />
             </div>
-            <div className="text-center">
-              <h3 className="text-xl font-medium">Agendamento Confirmado!</h3>
-              <p className="text-muted-foreground">Seu agendamento foi adicionado ao seu Google Calendar</p>
+            <div className='text-center'>
+              <h3 className='font-medium text-xl'>Agendamento Confirmado!</h3>
+              <p className='text-muted-foreground'>
+                Seu agendamento foi adicionado ao seu Google Calendar
+              </p>
             </div>
           </div>
         ) : (
-          <div className="space-y-4">
-            <div className="rounded-lg bg-muted p-4">
-              <div className="grid grid-cols-2 gap-2">
+          <div className='space-y-4'>
+            <div className='bg-muted p-4 rounded-lg'>
+              <div className='gap-2 grid grid-cols-2'>
                 <div>
-                  <p className="text-sm font-medium">Data</p>
-                  <p className="text-muted-foreground">{formattedDate}</p>
+                  <p className='font-medium text-sm'>Data</p>
+                  <p className='text-muted-foreground'>{formattedDate}</p>
                 </div>
                 <div>
-                  <p className="text-sm font-medium">Horário</p>
-                  <p className="text-muted-foreground">{time}</p>
+                  <p className='font-medium text-sm'>Horário</p>
+                  <p className='text-muted-foreground'>{time}</p>
                 </div>
               </div>
             </div>
-            <p className="text-sm text-muted-foreground">
-              Ao confirmar, este horário será reservado e adicionado ao seu Google Calendar.
+            <p className='text-muted-foreground text-sm'>
+              Ao confirmar, este horário será reservado e adicionado ao seu
+              Google Calendar.
             </p>
           </div>
         )}
       </CardContent>
-      <CardFooter className="flex justify-end gap-2">
+      <CardFooter className='flex justify-end gap-2'>
         {isBooked ? (
           <Button onClick={onClose}>Voltar para Agendamentos</Button>
         ) : (
           <>
-            <Button variant="outline" onClick={onClose} disabled={isLoading}>
+            <Button variant='outline' onClick={onClose} disabled={isLoading}>
               Cancelar
             </Button>
             <Button onClick={handleConfirm} disabled={isLoading}>
               {isLoading ? (
                 <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  <Loader2 className='mr-2 w-4 h-4 animate-spin' />
                   Processando...
                 </>
               ) : (
-                "Confirmar Agendamento"
+                'Confirmar Agendamento'
               )}
             </Button>
           </>
@@ -93,4 +118,3 @@ export function AppointmentConfirmation({ date, time, onClose }: AppointmentConf
     </Card>
   )
 }
-

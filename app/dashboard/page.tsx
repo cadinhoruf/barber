@@ -30,13 +30,13 @@ export default function DashboardPage() {
   }
 
   if (status === "loading" || !barberInfo) {
-    return <div>Loading...</div>
+    return <></>
   }
 
   return (
-    <div className="container mx-auto py-6">
-      <h1 className="mb-6 text-3xl font-bold">Agendamentos</h1>
-      <div className="grid gap-6 md:grid-cols-2">
+    <div className="mx-auto py-6 container">
+      <h1 className="mb-6 font-bold text-3xl">Agendamentos</h1>
+      <div className="gap-6 grid md:grid-cols-2">
         <BarberInfo barberInfo={barberInfo} />
         <AppointmentCalendar availableSlots={availableSlots} />
       </div>

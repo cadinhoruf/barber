@@ -1,0 +1,18 @@
+{
+  "semi": false,
+  "singleQuote": true,
+  "jsxSingleQuote": true,
+  "htmlWhitespaceSensitivity": "ignore",
+  "embeddedLanguageFormatting": "off",
+  "trailingComma": "none",
+  "tabWidth": 2,
+  "printWidth": 80,
+  "arrowParens": "avoid",
+  "organizeImports": true,
+  "ignore": [
+    "node_modules",
+    "dist",
+    "build",
+    "components"
+  ]
+}
