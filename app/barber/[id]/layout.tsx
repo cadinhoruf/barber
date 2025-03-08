@@ -1,13 +1,9 @@
 import type React from 'react'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import '../../../globals.css'
-import { Header } from '@/components/header'
-import { AuthProvider } from '@/components/auth-provider'
-import { Toaster } from 'sonner'
-import { AppSidebar } from '../../components/sidebar/sidebar'
+import '../../globals.css'
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
-import { getSidebarState } from '@/hooks/use-sidebar'
+import { AppSidebar } from '@/app/(dashboard)/components/sidebar/sidebar'
 
 const inter = Inter({ subsets: ['latin'] })
 

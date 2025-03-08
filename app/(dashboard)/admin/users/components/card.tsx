@@ -93,7 +93,6 @@ export const UserCard = ({ users }: { users: User[] }) => {
                 <TableHead>Email</TableHead>
                 <TableHead>Função</TableHead>
                 <TableHead>Data de Cadastro</TableHead>
-                <TableHead>Ações</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -132,15 +131,6 @@ export const UserCard = ({ users }: { users: User[] }) => {
                   </TableCell>
                   <TableCell>
                     {new Date(user.createdAt).toLocaleDateString('pt-BR')}
-                  </TableCell>
-                  <TableCell>
-                    <Button
-                      variant='outline'
-                      size='sm'
-                      onClick={() => router.push(`/admin/users/${user.id}`)}
-                    >
-                      Detalhes
-                    </Button>
                   </TableCell>
                 </TableRow>
               ))}

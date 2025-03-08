@@ -14,14 +14,14 @@ import {
 import { Button } from '@/components/ui/button'
 import { TimeSlots } from '@/components/time-slots'
 import { AppointmentConfirmation } from '@/components/appointment-confirmation'
-import type { AvailableSlot } from '@/lib/types'
+import type { Appointment } from '@prisma/client'
 
 interface AppointmentCalendarProps {
-  availableSlots: AvailableSlot[]
+  appointments: Appointment[]
 }
 
 export function AppointmentCalendar({
-  availableSlots
+  appointments
 }: AppointmentCalendarProps) {
   const [date, setDate] = useState<Date | undefined>(new Date())
   const [selectedSlot, setSelectedSlot] = useState<string | null>(null)
@@ -29,8 +29,9 @@ export function AppointmentCalendar({
 
   // Filter slots for the selected date
   const slotsForSelectedDate = date
-    ? availableSlots.filter(
-        slot => new Date(slot.date).toDateString() === date.toDateString()
+    ? appointments.filter(
+        appointment =>
+          new Date(appointment.dateTime).toDateString() === date.toDateString()
       )
     : []
 
@@ -78,8 +79,10 @@ export function AppointmentCalendar({
           disabled={date => {
             const today = new Date()
             today.setHours(0, 0, 0, 0)
-            const hasSlots = availableSlots.some(
-              slot => new Date(slot.date).toDateString() === date.toDateString()
+            const hasSlots = appointments.some(
+              appointment =>
+                new Date(appointment.dateTime).toDateString() ===
+                date.toDateString()
             )
             return date < today || !hasSlots
           }}

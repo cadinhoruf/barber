@@ -1,6 +1,7 @@
 'use client'
 
 import {
+  Clock,
   Notebook,
   PanelLeftOpen,
   PanelRightOpen,
@@ -17,36 +18,40 @@ import {
 import { useSession } from 'next-auth/react'
 import { Button } from '@/components/ui/button'
 import { NavUser } from './nav-user'
-
-export const data = {
-  navMain: [
-    {
-      title: 'Agendamentos',
-      items: [
-        {
-          title: 'Agendamentos',
-          icon: Notebook,
-          url: '/appointments'
-        }
-      ]
-    },
-
-    {
-      title: 'Administração',
-      items: [
-        {
-          title: 'Usuários',
-          icon: UserRound,
-          url: '/admin/users'
-        }
-      ]
-    }
-  ]
-}
-
-export function AppSidebar({ ...props }) {
+import { useParams } from 'next/navigation'
+export function AppSidebar({ ...props }: { id?: string }) {
+  const { id } = useParams()
   const { data: session } = useSession()
+  const data = {
+    navMain: [
+      {
+        title: 'Agendamentos',
+        items: [
+          {
+            title: 'Horários',
+            icon: Clock,
+            url: `/barber/${id}/schedules`
+          },
+          {
+            title: 'Agendamentos',
+            icon: Notebook,
+            url: `/barber/${id}/appointments`
+          }
+        ]
+      },
 
+      {
+        title: 'Administração',
+        items: [
+          {
+            title: 'Usuários',
+            icon: UserRound,
+            url: '/admin/users'
+          }
+        ]
+      }
+    ]
+  }
   const [navMain, setNavMain] = useState(data.navMain)
   const { toggleSidebar, open } = useSidebar()
   useEffect(() => {

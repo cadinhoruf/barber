@@ -22,17 +22,16 @@ export default function RootLayout({
   return (
     <html lang='pt-BR'>
       <body className={inter.className}>
-        <Toaster />
+        <Toaster richColors />
         <AuthProvider>
-          {/* <ThemeProvider
+          <ThemeProvider
             attribute='class'
             defaultTheme='system'
             enableSystem
             disableTransitionOnChange
-          > */}
-          {/* <Header /> */}
-          <main>{children}</main>
-          {/* </ThemeProvider> */}
+          >
+            <main>{children}</main>
+          </ThemeProvider>
         </AuthProvider>
       </body>
     </html>
