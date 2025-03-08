@@ -68,8 +68,9 @@ export function AppointmentCalendar({
           Selecione uma data e horário disponível
         </CardDescription>
       </CardHeader>
-      <CardContent className='space-y-4'>
+      <CardContent className='space-y-4 w-full'>
         <Calendar
+          className='w-full'
           mode='single'
           selected={date}
           onSelect={handleDateSelect}

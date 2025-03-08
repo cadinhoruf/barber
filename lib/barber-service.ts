@@ -1,33 +1,33 @@
-import type { BarberShopInfo, AvailableSlot } from "./types"
-import { addDays } from "date-fns"
+import type { BarberShopInfo, AvailableSlot } from './types'
+import { addDays } from 'date-fns'
 
 // Mock data for barber shop information
 export async function getBarberInfo(): Promise<BarberShopInfo> {
   // Simulate API call
   return {
-    name: "Barbearia Estilo",
-    description: "Especializada em cortes modernos e tradicionais",
-    address: "Rua das Barbas, 123 - Centro, São Paulo",
-    phone: "(11) 99999-9999",
-    hours: ["Seg-Sex: 9h às 19h", "Sáb: 9h às 18h"],
-    image: "/placeholder.svg?height=400&width=600",
+    name: 'Barbearia Estilo',
+    description: 'Especializada em cortes modernos e tradicionais',
+    address: 'Rua das Barbas, 123 - Centro, São Paulo',
+    phone: '(11) 99999-9999',
+    hours: ['Seg-Sex: 9h às 19h', 'Sáb: 9h às 18h'],
+    image: '/placeholder.svg?height=400&width=600',
     services: [
       {
-        name: "Corte de Cabelo",
+        name: 'Corte de Cabelo',
         price: 50,
-        duration: 30,
+        duration: 30
       },
       {
-        name: "Barba",
+        name: 'Barba',
         price: 30,
-        duration: 20,
+        duration: 20
       },
       {
-        name: "Corte + Barba",
+        name: 'Corte + Barba',
         price: 70,
-        duration: 45,
-      },
-    ],
+        duration: 45
+      }
+    ]
   }
 }
 
@@ -58,10 +58,9 @@ export async function getAvailableSlots(): Promise<AvailableSlot[]> {
 
     slots.push({
       date: date.toISOString(),
-      times,
+      times
     })
   }
 
   return slots
 }
-

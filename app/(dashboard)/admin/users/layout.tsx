@@ -1,11 +1,12 @@
 import type React from 'react'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import './globals.css'
+import '../../../globals.css'
 import { Header } from '@/components/header'
 import { AuthProvider } from '@/components/auth-provider'
 import { Toaster } from 'sonner'
-import { ThemeProvider } from './providers/theme/provider'
+import { AppSidebar } from '../../components/sidebar/sidebar'
+import { SidebarProvider } from '@/components/ui/sidebar'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -20,21 +21,12 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang='pt-BR'>
-      <body className={inter.className}>
-        <Toaster />
-        <AuthProvider>
-          {/* <ThemeProvider
-            attribute='class'
-            defaultTheme='system'
-            enableSystem
-            disableTransitionOnChange
-          > */}
-          {/* <Header /> */}
-          <main>{children}</main>
-          {/* </ThemeProvider> */}
-        </AuthProvider>
-      </body>
-    </html>
+    <>
+      <Toaster />
+      <SidebarProvider>
+        <AppSidebar />
+        <main>{children}</main>
+      </SidebarProvider>
+    </>
   )
 }
